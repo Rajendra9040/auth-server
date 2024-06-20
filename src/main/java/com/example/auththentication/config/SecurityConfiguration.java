@@ -23,7 +23,7 @@ public class SecurityConfiguration {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/auth/user/signup", "/auth/user/login")
+                .requestMatchers("/user/signup", "/user/login")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -10,8 +10,11 @@ import com.example.auththentication.repository.UserRepository;
 import com.example.auththentication.repository.UserRoleRepository;
 import com.example.auththentication.utils.EventPublisher;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
+    private final RedisTemplate<String, Object> redisTemplate;
 
 
     public User createUser(SignUpRequest request) {
@@ -41,7 +45,13 @@ public class UserService {
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
+        User user = (User) redisTemplate.opsForHash().get("USER", "USER_" + email);
+        if (Objects.nonNull(user)) {
+            return user;
+        }
+        user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException(String.format("User not found for email %s", email)));
+        redisTemplate.opsForHash().put("USER", "USER_" + email, user);
+        return user;
     }
 }
