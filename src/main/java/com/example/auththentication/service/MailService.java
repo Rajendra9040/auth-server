@@ -3,15 +3,14 @@ package com.example.auththentication.service;
 import com.example.auththentication.model.User;
 import jakarta.activation.DataSource;
 import jakarta.activation.FileDataSource;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,8 @@ import java.util.List;
 public class MailService {
     private final JavaMailSender emailSender;
 
-    public void sendMail(String to, String subject, String text) throws MessagingException, UnsupportedEncodingException {
+    @SneakyThrows
+    public void sendMail(String to, String subject, String text) {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -33,10 +33,10 @@ public class MailService {
     }
 
 
-    public void sendMail(String to, String subject, String text, List<String> filePaths) throws MessagingException, UnsupportedEncodingException {
+    @SneakyThrows
+    public void sendMail(String to, String subject, String text, List<String> filePaths) {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
         helper.setFrom("rajumahapatra096@gmail.com", "Registration-service");
         helper.setTo(to);
         helper.setSubject(subject);
@@ -51,7 +51,6 @@ public class MailService {
                 System.err.println("File not found: " + filePath);
             }
         }
-
         emailSender.send(message);
         System.out.println("Email Sent Successfully!!");
     }
@@ -62,10 +61,6 @@ public class MailService {
         String attachedFilePath = "D:/PersonalDocuments/My_document/Aadhaar_card.pdf";
         List<String> filePaths = new ArrayList<>();
         filePaths.add(attachedFilePath);
-        try {
-            sendMail(user.getEmail(), subject, body, filePaths);
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        sendMail(user.getEmail(), subject, body, filePaths);
     }
 }
