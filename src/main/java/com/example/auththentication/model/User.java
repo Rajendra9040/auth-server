@@ -34,6 +34,10 @@ public class User extends BaseModel {
     @Column(name = "secret")
     private String secret;
 
+    @Column(name = "lang_key")
+    @Builder.Default
+    private String langKey = "en";
+
     public User() {
         super();
         this.secret = Base32.random();

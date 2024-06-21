@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{title}">User registered successfully!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p th:text="#{greeting(${name} != null ? name : 'Customer')}">
+    Dear
+</p>
+<p>
+        <span th:text="'Your user account with the email ' + ${email} + ' has been created successfully!'">
+            Your user account with the provided email has been created successfully!
+        </span>
+</p>
+<p>
+    <span th:text="#{email.reset.text2}">Regards, </span>
+    <br/>
+    <span th:text="#{email.signature}">Team LiveWell</span>
+</p>
+</body>
+</html>

@@ -22,3 +22,7 @@ spring:
           auth: true
           starttls:
             enable: true
+
+  thymeleaf:
+    prefix: classpath:/template/mail/
+
