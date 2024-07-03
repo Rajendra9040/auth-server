@@ -6,7 +6,6 @@ import jakarta.activation.FileDataSource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -69,8 +68,9 @@ public class MailService {
         filePaths.add(attachedFilePath);
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
-        context.setVariable("name", user.getName());
-        context.setVariable("email", user.getEmail());
+        context.setVariable("user", user);
+        context.setVariable("userName", user.getName());
+        context.setVariable("baseUrl", "dummy-url");
         String htmlContent = templateEngine.process("user-registration", context);
         String subject = messageSource.getMessage("subject", null, locale);
         try {

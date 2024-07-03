@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jboss.aerogear.security.otp.api.Base32;
 
+import java.util.LinkedList;
+
 @Getter
 @Setter
 @Builder
@@ -37,6 +39,10 @@ public class User extends BaseModel {
     @Column(name = "lang_key")
     @Builder.Default
     private String langKey = "en";
+
+    @Column(name = "reset_key")
+    @Builder.Default
+    private String resetKey ="dummy-key";
 
     public User() {
         super();

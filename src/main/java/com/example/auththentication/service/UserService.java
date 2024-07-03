@@ -40,8 +40,8 @@ public class UserService {
         userRole.setRoleId(role.getId());
         userRole.setUserId(createUser.getId());
         userRoleRepository.save(userRole);
-        EventPublisher.publishEvent(new UserCreationEvent().setUser(createUser));
-        return createUser;
+        EventPublisher.publishEvent(new UserCreationEvent().setUser(user));
+        return user;
     }
 
     public User getUserByEmail(String email) {
