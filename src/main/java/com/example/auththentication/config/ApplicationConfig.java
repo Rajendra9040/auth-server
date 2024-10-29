@@ -48,7 +48,7 @@ public class ApplicationConfig {
 
     public List<Role> getUserRoles(User user) {
         List<Long> userRoleIds = userRoleRepository.findByUserId(user.getId()).stream()
-            .map(UserRole::getId).toList();
+            .map(UserRole::getRoleId).toList();
         return roleRepository.findByIdIn(userRoleIds);
     }
 

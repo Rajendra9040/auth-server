@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jboss.aerogear.security.otp.api.Base32;
 
-import java.util.LinkedList;
-
 @Getter
 @Setter
 @Builder
